@@ -25,12 +25,11 @@ def earliest_ancestor(ancestors, starting_node):
     if len(path) == 1:
         return -1
     else:
-        lowest = 1
+        lowest = path[-1]["length"]
         lowest_numbers = []
-        for i in range(len(path)):
-            if path[i]["length"] > lowest:
-                lowest = path[i]["length"]
-                lowest_numbers = [int(path[i]["number"])]
+        for i in range(1, len(path) + 1):
+            if path[-i]["length"] == lowest:
+                lowest_numbers.append(int(path[-i]["number"]))
             else:
-                lowest_numbers.append(int(path[i]["number"]))
+                break
         return min(lowest_numbers)
