@@ -99,7 +99,7 @@ class SocialGraph:
                 start = v
                 while start in parent:
                     visited[v].append(start)
-                    start = parent[start]
+                    start = parent[start][0]
                 visited[v].append(userID)
                 visited[v].reverse()
             else:
@@ -109,7 +109,10 @@ class SocialGraph:
             # Check for neighbors
             for neighbor in self.friendships[v]:
                 if neighbor not in visited:
-                    parent[neighbor] = v
+                    if neighbor in parent:
+                        parent[neighbor].append(v)
+                    else:
+                        parent[neighbor] = [v]
                     q.append(neighbor)
         
         print('p', path)
