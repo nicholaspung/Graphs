@@ -82,12 +82,46 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        # Not optmized queue
+        # list.append() and list.pop(0)
+        q = []
+        # Add node to queue and start traversing
+        path = []
+        parent = {}
+        q.append(userID)
+        while len(q) > 0:
+        # for i in range(5):
+            # Remove node from queue
+            v = q.pop(0)
+            # Result = [1], [1,8], [1,8,10], [1,7]
+            if v in parent:
+                visited[v] = []
+                start = v
+                while start in parent:
+                    visited[v].append(start)
+                    start = parent[start]
+                visited[v].append(userID)
+                visited[v].reverse()
+            else:
+                visited[v] = [v]
+            path.append(v)
+            # Do something
+            # Check for neighbors
+            for neighbor in self.friendships[v]:
+                if neighbor not in visited:
+                    parent[neighbor] = v
+                    q.append(neighbor)
+        
+        print('p', path)
+        print('parent', parent)
+
+
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(10, 3)
+    sg.populateGraph(10, 2)
     print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
     print(connections)
