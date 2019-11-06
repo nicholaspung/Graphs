@@ -60,6 +60,7 @@ class SocialGraph:
             for friendID in range(userID + 1, self.lastID + 1):
                 possibleFriendships.append( (userID, friendID) )
 
+        print(possibleFriendships)
         # Shuffle the list
         random.shuffle(possibleFriendships)
 
@@ -114,10 +115,6 @@ class SocialGraph:
                     else:
                         parent[neighbor] = [v]
                     q.append(neighbor)
-        
-        print('p', path)
-        print('parent', parent)
-
 
         return visited
 
@@ -128,3 +125,10 @@ if __name__ == '__main__':
     print(sg.friendships)
     connections = sg.getAllSocialPaths(1)
     print(connections)
+    listOfKeys = connections.keys()
+    print(f'Number of connections: {len(listOfKeys)}')
+    avgDegreeOfSeparation = 0
+    for i in listOfKeys:
+        avgDegreeOfSeparation += len(connections[i])
+    print(f"Average Degree of Separation: {avgDegreeOfSeparation/10}")
+
